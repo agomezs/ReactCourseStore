@@ -23,7 +23,7 @@ gulp.task('connect', function () {
         root: ['dist'],
         port: config.port,
         base: config.devBaseUrl,
-        livereLoad: true
+        livereload: true
     });
 });
 gulp.task('open', ['connect'], function () {
@@ -45,7 +45,6 @@ gulp.task('htmlToDev', function() {
 gulp.task('watch', function () {
     gulp.watch(config.paths.html, ['htmlToDev']);
 });
-
 
 // Default gulp task.
 gulp.task('default', ['htmlToDev', 'open', 'watch']);
