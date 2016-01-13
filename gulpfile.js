@@ -3,6 +3,10 @@
 var gulp = require('gulp');
 var connect = require('gulp-connect');
 var open = require('gulp-open');
+var browserify = require('browserify');
+var reactify = require('reactify');
+var source = require('vinyl-source-stream'); // Use conventional text streams with Gulp
+var concat = require('gulp-concat');
 
 var config = {
   port: 9005,
@@ -10,7 +14,10 @@ var config = {
   paths: {
       html: './src/*.html',
       js: './src/**/*.js',
-      css: '',
+      css: [
+            'node_modules/bootstrap/dist/css/bootstrap.min.css',
+            'node_modules/bootstrap/dist/css/bootstrap-theme.min.css'
+        ],
       dist: './dist',
       mainJs: './src/main.js'
   }
@@ -41,10 +48,27 @@ gulp.task('htmlToDev', function() {
         .pipe(connect.reload());
 });
 
+gulp.task('js', function () {
+  browserify(config.paths.mainJs)
+    .transform(reactify)
+    .bundle()
+    .on('error', console.error.bind(console)) // Writes the erros to the console.
+    .pipe(source('bundle.js'))
+    .pipe(gulp.dest(config.paths.dist + '/scripts'))
+    .pipe(connect.reload()); // Reloads the server.
+});
+
+gulp.task('css', function () {
+  gulp.src(config.paths.css)
+    .pipe(concat('app.css'))
+    .pipe(gulp.dest(config.paths.dist + '/css'));
+});
+
 // Watch for changes.
 gulp.task('watch', function () {
     gulp.watch(config.paths.html, ['htmlToDev']);
+    gulp.watch(config.paths.js, ['js']);
 });
 
 // Default gulp task.
-gulp.task('default', ['htmlToDev', 'open', 'watch']);
+gulp.task('default', ['htmlToDev', 'js', 'css', 'open', 'watch']);
