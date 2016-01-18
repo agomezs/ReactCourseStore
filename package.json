@@ -11,11 +11,15 @@
   "dependencies": {
     "bootstrap": "^3.3.6",
     "browserify": "^13.0.0",
+    "flux": "^2.1.1",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^1.1.1",
     "gulp-open": "^1.0.0",
+    "history": "^1.17.0",
     "jquery": "^2.2.0",
+    "react": "^0.14.6",
+    "react-router": "^1.0.3",
     "reactify": "^1.1.1",
     "vinyl-source-stream": "^1.1.0"
   }
