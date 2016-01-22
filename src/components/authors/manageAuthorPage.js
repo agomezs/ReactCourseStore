@@ -4,7 +4,6 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 var AuthorForm = require('./authorForm');
-
 var AuthorActions = require('../../actions/authorActions');
 var AuthorStore = require('../../stores/authorStore');
 var toastr = require('toastr');

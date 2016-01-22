@@ -2,9 +2,7 @@
 
 var React = require('react');
 var Link = require('react-router').Link;
-// var AuthorApi = require('../../api/authorApi');
 var AuthorList = require('./authorList');
-
 var AuthorActions = require('../../actions/authorActions');
 var AuthorStore = require('../../stores/authorStore');
 
@@ -14,6 +12,19 @@ var AuthorPage = React.createClass({
       authors: AuthorStore.getAllAuthors()
     };
   },
+
+  componentWillMount: function() {
+		AuthorStore.addChangeListener(this._onChange);
+	},
+
+	//Clean up when this component is unmounted
+	componentWillUnmount: function() {
+		AuthorStore.removeChangeListener(this._onChange);
+	},
+
+	_onChange: function() {
+		this.setState({ authors: AuthorStore.getAllAuthors() });
+	},
 
   // // Not longer needed when using flux
   // componentDidMount: function () {

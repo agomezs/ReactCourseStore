@@ -15,7 +15,7 @@ var AuthorStore = ObjectAssign({}, EventEmitter.prototype, {
   },
 
   removeChangeListener: function (callback) {
-    this.removeChangeListener(CHANGE_EVENT, callback);
+    this.removeListener(CHANGE_EVENT, callback);
   },
 
   emitChange: function () {
@@ -46,6 +46,12 @@ Dispatcher.register(function(action) {
       var existingAuthor = _.find(_authors, {id: action.author.id});
       var existingAuthorIndex = _.indexOf(_authors, existingAuthor);
       _authors.splice(existingAuthorIndex, 1, action.author);
+      AuthorStore.emitChange();
+      break;
+    case ActionTypes.DELETE_AUTHOR:
+      _.remove(_authors, function(author) {
+        return action.id === author.id;
+      });
       AuthorStore.emitChange();
       break;
     default:
