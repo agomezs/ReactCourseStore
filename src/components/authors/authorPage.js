@@ -2,23 +2,27 @@
 
 var React = require('react');
 var Link = require('react-router').Link;
-var AuthorApi = require('../../api/authorApi');
+// var AuthorApi = require('../../api/authorApi');
 var AuthorList = require('./authorList');
+
+var AuthorActions = require('../../actions/authorActions');
+var AuthorStore = require('../../stores/authorStore');
 
 var AuthorPage = React.createClass({
   getInitialState: function () {
     return {
-      authors: []
+      authors: AuthorStore.getAllAuthors()
     };
   },
 
-  componentDidMount: function () {
-    if(this.isMounted) {
-      this.setState({
-        authors: AuthorApi.getAllAuthors()
-      });
-    }
-  },
+  // // Not longer needed when using flux
+  // componentDidMount: function () {
+  //   if(this.isMounted) {
+  //     this.setState({
+  //       authors: AuthorApi.getAllAuthors()
+  //     });
+  //   }
+  // },
 
   render: function () {
     return (
