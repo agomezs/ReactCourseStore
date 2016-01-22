@@ -11,7 +11,17 @@ var AuthorActions = {
       actionType: ActionTypes.CREATE_AUTHOR,
       author: newAuthor
     };
-    // Tells all the stores that an author was just created. 
+    // Tells all the stores that an author was just created.
+    Dispatcher.dispatch(action);
+  },
+
+  updateAuthor: function (author) {
+    var updatedAuthor = AuthorApi.saveAuthor(author);
+    var action = {
+      actionType: ActionTypes.UPDATE_AUTHOR,
+      author: updatedAuthor
+    };
+
     Dispatcher.dispatch(action);
   }
 };

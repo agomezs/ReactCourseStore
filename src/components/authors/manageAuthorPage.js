@@ -66,11 +66,16 @@ var ManageAuthorPage = React.createClass({
       return;
     }
 
-    // AuthorApi.saveAuthor(this.state.author);
-    AuthorActions.createAuthor(this.state.author)
+    if(this.state.author.id) {
+      AuthorActions.updateAuthor(this.state.author);
+      toastr.success('Author updated...');
+    } else {
+      // AuthorApi.saveAuthor(this.state.author);
+      AuthorActions.createAuthor(this.state.author);
+      toastr.success('Author added...');
+    }
 
     this.setState({dirty: false});
-    toastr.success('Author added...');
     this.history.pushState(null, 'authors');
   },
 
