@@ -13,7 +13,9 @@ var routes = (
       <IndexRoute component={require('./components/homePage')} />
       <Route path="authors" component={require('./components/authors/authorPage')} />
       <Route path="author" component={require('./components/authors/manageAuthorPage')} />
+      <Route path="author/:id" component={require('./components/authors/manageAuthorPage')}/>
       <Route path="about" component={require('./components/about/aboutPage')} />
+
 
       <Redirect from="aboutus" to="about"/>
 

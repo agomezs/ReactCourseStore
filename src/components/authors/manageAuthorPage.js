@@ -4,7 +4,9 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 var AuthorForm = require('./authorForm');
-var AuthorApi = require('../../api/AuthorApi')
+var AuthorApi = require('../../api/AuthorApi');
+// var AuthorActions = require('../../actions/authorActions');
+// var AuthorStore = require('../../stores/authorStore');
 var toastr = require('toastr');
 
 var ManageAuthorPage = React.createClass({
@@ -19,6 +21,15 @@ var ManageAuthorPage = React.createClass({
       errors: {},
       dirty: false
     };
+  },
+
+  componentWillMount: function () {
+    // When someone clicks an author.
+    var authorId = this.props.params.id;
+
+    if(authorId) {
+      this.setState({author: AuthorApi.getAuthorById(authorId)});
+    }
   },
 
   setAuthorState: function (event) {
@@ -55,6 +66,8 @@ var ManageAuthorPage = React.createClass({
     }
 
     AuthorApi.saveAuthor(this.state.author);
+    // AuthorActions.createAuthor(this.state.author)
+
     this.setState({dirty: false});
     toastr.success('Author added...');
     this.history.pushState(null, 'authors');
